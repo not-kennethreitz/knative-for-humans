@@ -18,6 +18,6 @@ It will take a few moments for all the components to be up and running; you can 
 
 ## Step 2: Install a Docker Registry for Knative
 
-    $ kubectl apply -f ...
+    $ kubectl apply -f https://raw.githubusercontent.com/kennethreitz/knative-for-humans/master/deploy/knative-registry.yml
 
 The default size of the registry data volume is 80GiB. You can change this, to meet your requirements.
