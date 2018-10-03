@@ -19,7 +19,7 @@ It will take a few minutes for all the components to be up and running; you can 
 
 It will take a few moments for all the components to be up and running; you can run `kubectl get pods --namespace knative-build --watch` to see the current status.
 
-### Install a Docker Registry for Knative
+## Step 2: Install a Docker Registry for Knative
 
     $ kubectl apply -f ...
 
