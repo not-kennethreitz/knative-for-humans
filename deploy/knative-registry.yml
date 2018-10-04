@@ -70,7 +70,7 @@ spec:
   - name: knative-registry-http
     port: 80
     # nodePort: 80
-    targetPort: 0
+    targetPort: 80
   selector:
     io.kompose.service: knative-registry
 status:

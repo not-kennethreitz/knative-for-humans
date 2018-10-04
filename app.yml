@@ -1,0 +1,26 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: httpbin
+  namespace: default
+spec:
+  runLatest:
+    configuration:
+      build:
+        # serviceAccountName: build-bot
+        source:
+          git:
+            url: https://github.com/requests/httpbin.git
+            revision: master
+        template:
+          name: bob-builder
+          arguments:
+          - name: REGISTRY
+            value: knative-registry.knative-build.svc.cluster.local:80
+          - name: IMAGE
+            value: httpbin:latest
+      revisionTemplate:
+        spec:
+          container:
+            image: knative-registry.knative-build.svc.cluster.local:80/httpbin:latest
+            imagePullPolicy: Always

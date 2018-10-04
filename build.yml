@@ -1,0 +1,36 @@
+apiVersion: build.knative.dev/v1alpha1
+kind: BuildTemplate
+metadata:
+  name: bob-builder
+spec:
+  parameters:
+  - name: REGISTRY
+    description: The registry to push to
+  - name: IMAGE
+    description: The name of the image to push
+  steps:
+  - name: build-and-push
+    image: kennethreitz/bob-builder
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - name: varlibdocker
+      mountPath: /var/lib/docker
+    # - name: docker-socket
+    #   mountPath: /var/run/docker.sock
+    args:
+    - /workspace
+    - ${REGISTRY}/${IMAGE}
+    - --push
+    - --allow-insecure
+
+
+# As an implementation detail, this template mounts the host's daemon socket.
+  volumes:
+
+    - name: varlibdocker
+      emptyDir: {}
+    # - name: docker-socket
+    #   hostPath:
+    #     path: /var/run/docker.sock
+    #     type: Socket
