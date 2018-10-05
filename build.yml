@@ -22,7 +22,7 @@ spec:
     - /workspace
     - ${REGISTRY}/${IMAGE}
     - --push
-    - --allow-insecure
+    # - --allow-insecure
 
 
 # As an implementation detail, this template mounts the host's daemon socket.

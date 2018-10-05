@@ -39,19 +39,41 @@ spec:
       containers:
       - env:
         - name: REGISTRY_HTTP_ADDR
-          value: 0.0.0.0:80
+          value: 0.0.0.0:443
+        - name: REGISTRY_HTTP_TLS_CERTIFICATE
+          value: /certs/cert.crt
+        - name: REGISTRY_HTTP_TLS_KEY
+          value: /certs/cert.key
         image: registry:2
         name: registry
         resources: {}
         volumeMounts:
         - mountPath: /var/lib/registry
           name: knative-registry-data
+        - mountPath: /certs
+          name: certs
+        ports:
+        - containerPort: 443
       restartPolicy: Always
       volumes:
       - name: knative-registry-data
         persistentVolumeClaim:
           claimName: knative-registry-data
+      - name: certs
+        configMap:
+          name:  knative-registry-certs
+
 status: {}
+# ---
+# kind: ConfigMap
+# apiVersion: v1
+# metadata:
+#   name: knative-registry-certs
+#   namespace: knative-build
+# data:
+#   tls.crt:
+#   tls.key:
+# ---
 ---
 apiVersion: v1
 kind: Service
@@ -68,11 +90,10 @@ spec:
   clusterIP: None
   ports:
   - name: knative-registry-http
-    port: 80
+    port: 443
     # nodePort: 80
-    targetPort: 80
+    targetPort: 443
   selector:
     io.kompose.service: knative-registry
 status:
   loadBalancer: {}
----

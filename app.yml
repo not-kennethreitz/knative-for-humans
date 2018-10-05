@@ -16,11 +16,11 @@ spec:
           name: bob-builder
           arguments:
           - name: REGISTRY
-            value: knative-registry.knative-build.svc.cluster.local:80
+            value: knative-registry.knative-build.svc.cluster.local
           - name: IMAGE
             value: httpbin:latest
       revisionTemplate:
         spec:
           container:
-            image: knative-registry.knative-build.svc.cluster.local:80/httpbin:latest
+            image: knative-registry.knative-build.svc.cluster.local/httpbin:latest
             imagePullPolicy: Always
